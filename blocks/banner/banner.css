@@ -1,0 +1,23 @@
+/* Base Banner Styles - Default Blue */
+.block.banner {
+  background-color: blue;
+  color: #ffffff;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-radius: 8px;
+}
+
+.block.banner img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.block.banner h1,
+.block.banner h2,
+.block.banner p {
+  margin: 0;
+  color: inherit;
+}

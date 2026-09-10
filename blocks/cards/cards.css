@@ -3,17 +3,16 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 32px 24px;
 }
 
+/* WKND article cards are flat — no border, background, or shadow */
 .cards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
-}
-
-.cards .cards-card-body {
-  margin: 16px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .cards .cards-card-image {
@@ -24,4 +23,28 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+.cards .cards-card-body {
+  margin: 16px 0 0;
+}
+
+.cards .cards-card-body p {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+/* Card title — WKND uses a blue Source Sans Pro link */
+.cards .cards-card-body p:first-child {
+  margin: 0 0 6px;
+}
+
+.cards .cards-card-body strong {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--link-color);
 }

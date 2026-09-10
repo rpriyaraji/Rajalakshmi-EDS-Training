@@ -3,35 +3,77 @@
   padding: 0;
 }
 
+/* WKND teaser hero — full-bleed image with a white text panel overlaid on the bottom */
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
-}
-
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  display: block;
+  line-height: 0;
 }
 
 .hero img {
   object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1;
+}
+
+/* white overlay panel */
+.hero .hero-content {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  margin: -48px auto 0;
+  padding: 8px 24px 24px;
+  background-color: var(--background-color);
+}
+
+.hero .hero-content h1,
+.hero .hero-content h2 {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  color: var(--text-color);
+  margin: 12px 0 0;
+}
+
+.hero .hero-content p {
+  font-family: var(--body-font-family);
+  color: var(--text-color);
+  margin: 12px 0 0;
+}
+
+/* yellow CTA button rendered from a link */
+.hero .hero-content p.button-container {
+  margin-top: 20px;
+}
+
+.hero .hero-content .button:any-link {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--accent-text-color);
+}
+
+.hero .hero-content .button:any-link:hover,
+.hero .hero-content .button:any-link:focus-visible {
+  background-color: var(--text-color);
+  border-color: var(--text-color);
+  color: var(--background-color);
 }
 
 @media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+  .hero img {
+    aspect-ratio: 2 / 1;
+    max-height: 640px;
+  }
+
+  .hero .hero-content {
+    max-width: var(--content-max-width);
+    margin-top: -180px;
+    padding: 20px 44px 0;
   }
 }

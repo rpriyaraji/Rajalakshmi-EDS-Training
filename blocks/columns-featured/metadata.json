@@ -1,0 +1,10 @@
+{
+  "variantName": "columns-featured",
+  "baseBlock": "columns",
+  "visualCharacteristics": "Featured-article panel with a light grey background: large photo on the left, text on the right (eyebrow label, large heading, body copy, and a CTA button). Stacks vertically on mobile.",
+  "contentPattern": "One row, two cells: cell 1 = image, cell 2 = eyebrow + heading + description + CTA link.",
+  "usage": "Homepage 'Featured Article' section (Camping in Western Australia). Also reused for the magazine (/us/en/magazine) featured-article panel.",
+  "canonicalModel": "standalone",
+  "options": [],
+  "memberVariantIds": ["columns-featured"]
+}

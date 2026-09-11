@@ -1,0 +1,10 @@
+{
+  "variantName": "hero-feature",
+  "baseBlock": "hero",
+  "visualCharacteristics": "Full-width photo banner with a white content card overlaid on the lower-left, containing a heading, body copy, and a CTA button.",
+  "contentPattern": "Image (full-width background) plus heading + description + CTA link grouped into an overlay card.",
+  "usage": "Homepage 'Climbing New Zealand' feature banner.",
+  "canonicalModel": "standalone",
+  "options": [],
+  "memberVariantIds": ["hero-feature"]
+}

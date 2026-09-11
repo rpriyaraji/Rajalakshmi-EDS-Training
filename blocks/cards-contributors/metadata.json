@@ -1,0 +1,10 @@
+{
+  "variantName": "cards-contributors",
+  "baseBlock": "cards",
+  "visualCharacteristics": "Centered grid of people/team cards. Each card has a circular portrait, a name, a role/description line, and a row of social icon links. No border or card background.",
+  "contentPattern": "One row per person, cells: image cell (portrait) + body cell (name heading + role heading + social links).",
+  "usage": "About Us page 'Our Contributors' (4-up) and 'WKND Guides' (3-up) grids.",
+  "canonicalModel": "container",
+  "options": [],
+  "memberVariantIds": ["cards-contributors"]
+}

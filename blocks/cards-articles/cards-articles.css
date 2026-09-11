@@ -1,0 +1,81 @@
+/* Block: cards-articles — WKND article/adventure grid (source: .image-list.list) */
+
+/* Flat cards: no border, no background, no shadow. Image on top, blue linked */
+
+/* title, dark uppercase single-line description below. */
+
+.cards-articles ul {
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mobile-first: single column. */
+.cards-articles ul > li {
+  box-sizing: border-box;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 0 32px;
+}
+
+.cards-articles .cards-articles-card-image {
+  line-height: 0;
+}
+
+.cards-articles ul > li img {
+  width: 100%;
+  aspect-ratio: 13 / 10;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Body cell — EDS wraps title link + description text in a <p>. */
+.cards-articles .cards-articles-card-body {
+  margin: 2px 0 0;
+}
+
+.cards-articles .cards-articles-card-body p {
+  margin: 0;
+}
+
+/* Title link */
+.cards-articles .cards-articles-card-body .title-link:any-link {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m); /* 18px */
+  font-weight: 400;
+  line-height: 27px;
+  color: var(--link-color); /* #0045ff */
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* Short description — single-line, ellipsis truncated, dark gray */
+.cards-articles .cards-articles-card-body .description {
+  display: block;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs); /* 14px */
+  font-weight: 400;
+  line-height: 21px;
+  color: rgb(105 105 105); /* #696969 */
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 16px 0 0;
+}
+
+/* Desktop: multi-column flex grid. Source renders 4 across on a 1136px */
+
+/* container: each item ~260px content + 14px right gutter (~24% width). */
+@media (width >= 900px) {
+  .cards-articles ul > li {
+    width: 25%;
+    padding: 0 14px 0 0;
+  }
+}

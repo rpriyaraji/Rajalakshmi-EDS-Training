@@ -1,0 +1,10 @@
+{
+  "variantName": "carousel-hero",
+  "baseBlock": "carousel",
+  "visualCharacteristics": "Full-bleed rotating hero carousel. Each slide is a full-width background photo with a white content card overlaid on the lower-left containing a heading, description, and a single CTA button. Prev/next circular arrow controls and a row of dot indicators.",
+  "contentPattern": "One row per slide, two cells: cell 1 = slide image, cell 2 = heading + description + CTA link.",
+  "usage": "Homepage hero carousel with 3 slides (WKND Adventures / San Diego Surf Spots / Downhill Skiing Wyoming).",
+  "canonicalModel": "standalone",
+  "options": [],
+  "memberVariantIds": ["carousel-hero"]
+}

@@ -1,0 +1,260 @@
+{
+  "templates": [
+    {
+      "name": "about-us",
+      "urls": [
+        "https://wknd.site/us/en/about-us.html",
+        "https://wknd.site/us/en/magazine.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/about-us.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "cards-contributors",
+          "instances": [
+            ".cmp-experience-fragment--contributor"
+          ]
+        },
+        {
+          "name": "columns-featured",
+          "instances": [
+            ".cmp-teaser--featured"
+          ]
+        },
+        {
+          "name": "cards-articles",
+          "instances": [
+            ".image-list.list"
+          ]
+        }
+      ],
+      "urlPattern": "/us/en/*",
+      "sections": [
+        {
+          "id": "a1",
+          "name": "Page Title",
+          "selector": [
+            ".title.cmp-layout-container--fixed",
+            "main .title"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "h1"
+          ]
+        },
+        {
+          "id": "a2",
+          "name": "Our Contributors",
+          "selector": [
+            ".cmp-experience-fragment--contributor"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-contributors"
+          ],
+          "defaultContent": [
+            ".cmp-title__text",
+            ".cmp-text"
+          ]
+        },
+        {
+          "id": "a3",
+          "name": "WKND Guides",
+          "selector": [
+            ".cmp-experience-fragment--contributor"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-contributors"
+          ],
+          "defaultContent": [
+            ".cmp-title__text",
+            ".cmp-text"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "urls": [
+        "https://wknd.site/us/en.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en.html",
+      "description": "To be named in naming step",
+      "blocks": [
+        {
+          "name": "carousel-hero",
+          "instances": [
+            ".cmp-carousel--hero"
+          ]
+        },
+        {
+          "name": "columns-featured",
+          "instances": [
+            ".cmp-teaser--featured"
+          ]
+        },
+        {
+          "name": "cards-articles",
+          "instances": [
+            ".image-list.list"
+          ]
+        },
+        {
+          "name": "hero-feature",
+          "instances": [
+            ".cmp-teaser--imagebottom"
+          ]
+        }
+      ],
+      "urlPattern": "/us/*",
+      "sections": [
+        {
+          "id": "s1",
+          "name": "Hero Carousel",
+          "selector": [
+            ".carousel.cmp-carousel--hero",
+            ".cmp-carousel--hero"
+          ],
+          "style": null,
+          "blocks": [
+            "carousel-hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s2",
+          "name": "Featured Article",
+          "selector": [
+            ".teaser.cmp-teaser--featured",
+            ".cmp-teaser--featured"
+          ],
+          "style": null,
+          "blocks": [
+            "columns-featured"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s3",
+          "name": "Recent Articles",
+          "selector": [
+            ".image-list.list"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-articles"
+          ],
+          "defaultContent": [
+            ".cmp-title--underline",
+            ".cmp-button--primary"
+          ]
+        },
+        {
+          "id": "s4",
+          "name": "Next Adventures / Climbing New Zealand",
+          "selector": [
+            ".teaser.cmp-teaser--imagebottom",
+            ".cmp-teaser--imagebottom"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-feature"
+          ],
+          "defaultContent": [
+            ".cmp-title--underline"
+          ]
+        },
+        {
+          "id": "s5",
+          "name": "Where do you want to go?",
+          "selector": [
+            ".image-list.list"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-articles"
+          ],
+          "defaultContent": [
+            ".cmp-title",
+            ".cmp-button--primary"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "magazine",
+      "urls": [
+        "https://wknd.site/us/en/magazine/western-australia.html"
+      ],
+      "representativeUrl": "https://wknd.site/us/en/magazine/western-australia.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/us/en/magazine/*",
+      "sections": [
+        {
+          "id": "m1",
+          "name": "Lead Image",
+          "selector": [
+            ".cmp-image",
+            "main .image"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".cmp-image"
+          ]
+        },
+        {
+          "id": "m2",
+          "name": "Article Body",
+          "selector": [
+            ".cmp-text",
+            "main .text"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "h1",
+            "h2",
+            "h4",
+            ".cmp-text",
+            "blockquote"
+          ]
+        },
+        {
+          "id": "m3",
+          "name": "Author Bio",
+          "selector": [
+            ".cmp-experiencefragment",
+            "main .experiencefragment"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".cmp-title__text",
+            ".cmp-image",
+            ".cmp-button"
+          ]
+        },
+        {
+          "id": "m4",
+          "name": "Related Articles",
+          "selector": [
+            ".cmp-list",
+            "main .list"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".cmp-list"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "projectType": "da"
+  }
+}

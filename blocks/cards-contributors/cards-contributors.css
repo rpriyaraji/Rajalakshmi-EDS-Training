@@ -1,0 +1,145 @@
+/* cards-contributors — WKND people/team grid.
+   Values extracted from wknd.site/us/en/about-us.html computed styles.
+   Each contributor is authored as its own block, so each decorates to a single
+   ul>li card wrapped in its own .cards-contributors-wrapper. The grid is laid
+   out across those sibling wrappers at the section-container level. A default
+   heading (e.g. "WKND Guides") spans the full row, so following cards start a
+   new left-aligned row — matching the source 4-up / 3-up layout. */
+
+/* --- Grid layout across the sibling contributor wrappers --- */
+.cards-contributors-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 0;
+  max-width: var(--content-max-width);
+  margin: auto;
+  padding: 0 24px;
+}
+
+@media (width >= 900px) {
+  .cards-contributors-container {
+    padding: 0 32px;
+  }
+}
+
+/* the section-wrapper max-width/padding normally lands on each direct child
+   (now a grid item); move it to the container so items stay 1fr and don't
+   overflow the grid */
+.cards-contributors-container > .cards-contributors-wrapper,
+.cards-contributors-container > .default-content-wrapper {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* full-width intro/section headings break the grid rows */
+.cards-contributors-container > .default-content-wrapper {
+  grid-column: 1 / -1;
+}
+
+@media (width >= 600px) {
+  .cards-contributors-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards-contributors-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* --- Card --- */
+.cards-contributors ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards-contributors ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  /* source card padding: 9px 14px 18px */
+  padding: 9px 14px 18px;
+  border: 0;
+  background-color: transparent;
+}
+
+/* circular portrait — source img 164x164, radius 50%, margin 7px 0 */
+.cards-contributors .cards-contributors-card-image {
+  line-height: 0;
+  margin: 7px 0;
+}
+
+.cards-contributors .cards-contributors-card-image img {
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cards-contributors .cards-contributors-card-body {
+  margin: 0;
+  width: 100%;
+}
+
+/* name (h3) — Asar 24px/36px, weight 400, margin 0 0 6px, #202020 */
+.cards-contributors .contributor-name {
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 36px;
+  color: var(--text-color);
+}
+
+/* role (h5) — Source Sans Pro 14px/21px, weight 600, uppercase, #202020 */
+.cards-contributors .contributor-role {
+  margin: 0 0 12px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 21px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* decorate() moves the social <a>s into .contributor-social, leaving the
+   original empty <p> wrappers behind — hide them */
+.cards-contributors .cards-contributors-card-body p:empty {
+  display: none;
+}
+
+/* social bar — source: seamless dark #202020 strip with light (#ebebeb) links */
+.cards-contributors .contributor-social {
+  display: inline-flex;
+  justify-content: center;
+  gap: 0;
+  margin: 4px 0 0;
+  background-color: var(--dark-color);
+}
+
+.cards-contributors .contributor-social a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 14px 12px;
+  color: var(--light-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cards-contributors .contributor-social a:hover,
+.cards-contributors .contributor-social a:focus-visible {
+  color: var(--accent-color);
+  text-decoration: none;
+}

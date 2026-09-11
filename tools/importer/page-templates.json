@@ -26,6 +26,12 @@
           "instances": [
             ".image-list.list"
           ]
+        },
+        {
+          "name": "cards-secure",
+          "instances": [
+            ".cmp-teaser--secure"
+          ]
         }
       ],
       "urlPattern": "/us/en/*",
@@ -71,6 +77,20 @@
           "defaultContent": [
             ".cmp-title__text",
             ".cmp-text"
+          ]
+        },
+        {
+          "id": "a4",
+          "name": "Members Only",
+          "selector": [
+            ".cmp-teaser--secure"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-secure"
+          ],
+          "defaultContent": [
+            ".cmp-title--underline"
           ]
         }
       ]

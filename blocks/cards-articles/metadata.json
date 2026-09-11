@@ -1,0 +1,10 @@
+{
+  "variantName": "cards-articles",
+  "baseBlock": "cards",
+  "visualCharacteristics": "Flat responsive grid of article/adventure cards (typically 4-up). Each card is a photo on top with a linked title and a short description below; no border or card background.",
+  "contentPattern": "One row per card, cells: image cell + body cell (linked title + short description).",
+  "usage": "Homepage 'Recent Articles' and 'Where do you want to go?' grids (same variant, used twice). Also reused for the magazine (/us/en/magazine) article grid.",
+  "canonicalModel": "container",
+  "options": [],
+  "memberVariantIds": ["cards-articles"]
+}

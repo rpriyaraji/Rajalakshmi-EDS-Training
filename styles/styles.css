@@ -141,6 +141,19 @@ blockquote {
   margin-bottom: 0.25em;
 }
 
+/* WKND pull-quote: large Asar serif, no box or border */
+blockquote {
+  margin: 0.4em 0 0.5em;
+  padding: 0;
+  border: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xl);
+  font-weight: 400;
+  line-height: var(--heading-line-height);
+  font-style: normal;
+  color: var(--text-color);
+}
+
 code,
 pre {
   font-size: var(--body-font-size-s);

@@ -120,6 +120,23 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/cards-secure.js
+  function parse4(element, { document: document2 }) {
+    const image = element.querySelector(".cmp-teaser__image img, img");
+    const title = element.querySelector(".cmp-teaser__title, h2, h3");
+    const description = element.querySelector(".cmp-teaser__description, p");
+    const contentCell = [];
+    if (title) contentCell.push(title);
+    if (description) contentCell.push(description);
+    if (!image && !contentCell.length) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const cells = [[image || "", contentCell]];
+    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-secure", cells });
+    element.replaceWith(block);
+  }
+
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform(hookName, element, payload) {
@@ -191,7 +208,8 @@ var CustomImportScript = (() => {
   var parsers = {
     "cards-contributors": parse,
     "columns-featured": parse2,
-    "cards-articles": parse3
+    "cards-articles": parse3,
+    "cards-secure": parse4
   };
   var PAGE_TEMPLATE = {
     name: "about-us",
@@ -203,7 +221,8 @@ var CustomImportScript = (() => {
     blocks: [
       { name: "cards-contributors", instances: [".cmp-experience-fragment--contributor"] },
       { name: "columns-featured", instances: [".cmp-teaser--featured"] },
-      { name: "cards-articles", instances: [".image-list.list"] }
+      { name: "cards-articles", instances: [".image-list.list"] },
+      { name: "cards-secure", instances: [".cmp-teaser--secure"] }
     ],
     sections: [
       {
@@ -229,6 +248,14 @@ var CustomImportScript = (() => {
         style: null,
         blocks: ["cards-contributors"],
         defaultContent: [".cmp-title__text", ".cmp-text"]
+      },
+      {
+        id: "a4",
+        name: "Members Only",
+        selector: [".cmp-teaser--secure"],
+        style: null,
+        blocks: ["cards-secure"],
+        defaultContent: [".cmp-title--underline"]
       }
     ]
   };

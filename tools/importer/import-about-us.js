@@ -5,6 +5,7 @@
 import cardsContributorsParser from './parsers/cards-contributors.js';
 import columnsFeaturedParser from './parsers/columns-featured.js';
 import cardsArticlesParser from './parsers/cards-articles.js';
+import cardsSecureParser from './parsers/cards-secure.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-cleanup.js';
@@ -15,6 +16,7 @@ const parsers = {
   'cards-contributors': cardsContributorsParser,
   'columns-featured': columnsFeaturedParser,
   'cards-articles': cardsArticlesParser,
+  'cards-secure': cardsSecureParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
@@ -29,6 +31,7 @@ const PAGE_TEMPLATE = {
     { name: 'cards-contributors', instances: ['.cmp-experience-fragment--contributor'] },
     { name: 'columns-featured', instances: ['.cmp-teaser--featured'] },
     { name: 'cards-articles', instances: ['.image-list.list'] },
+    { name: 'cards-secure', instances: ['.cmp-teaser--secure'] },
   ],
   sections: [
     {
@@ -47,6 +50,12 @@ const PAGE_TEMPLATE = {
       selector: ['.cmp-experience-fragment--contributor'],
       style: null, blocks: ['cards-contributors'],
       defaultContent: ['.cmp-title__text', '.cmp-text'],
+    },
+    {
+      id: 'a4', name: 'Members Only',
+      selector: ['.cmp-teaser--secure'],
+      style: null, blocks: ['cards-secure'],
+      defaultContent: ['.cmp-title--underline'],
     },
   ],
 };

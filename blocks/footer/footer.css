@@ -1,20 +1,111 @@
+/* WKND footer — mobile-first. Dark band, light text. Values from wknd.site. */
+
 footer {
-  background-color: var(--light-color);
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  font-family: var(--body-font-family);
   font-size: var(--body-font-size-xs);
 }
 
-footer .footer > div {
+footer .footer {
+  box-sizing: border-box;
+  max-width: var(--content-max-width);
   margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  padding: 24px;
 }
 
-footer .footer p {
+footer .footer p { margin: 0 0 12px; }
+
+footer .footer a:any-link {
+  color: var(--light-color);
+  text-decoration: none;
+}
+
+footer .footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* brand / logo */
+footer .footer-brand img {
+  width: 120px;
+  height: auto;
+}
+
+/* footer nav links */
+footer .footer-nav ul {
+  list-style: none;
+  margin: 16px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+footer .footer-nav a:any-link {
+  text-transform: uppercase;
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.02em;
+}
+
+/* Follow Us + social icons */
+footer .footer-social h4 {
+  margin: 8px 0 12px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--light-color);
+}
+
+footer .footer-social ul {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 16px;
+}
+
+footer .footer-social img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+footer .footer-social a:hover {
+  opacity: 0.7;
+}
+
+/* legal / about text */
+footer .footer-legal {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(235 235 235 / 25%);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.6;
+}
+
+footer .footer-legal a:any-link {
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer {
+    display: grid;
+    grid-template:
+      'brand nav social' auto
+      'legal legal legal' auto / auto 1fr auto;
+    gap: 24px 48px;
+    padding: 32px;
+    align-items: start;
+  }
+
+  footer .footer-brand { grid-area: brand; }
+  footer .footer-nav { grid-area: nav; }
+  footer .footer-social { grid-area: social; }
+  footer .footer-legal { grid-area: legal; }
+
+  footer .footer-nav ul {
+    margin: 0;
   }
 }

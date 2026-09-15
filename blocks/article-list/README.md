@@ -15,10 +15,15 @@ Optional configuration rows:
 | --- |
 | /us/en/magazine/query-index.json |
 | limit: 4 |
+| path: /us/en/magazine/ |
 
-- **index path** (a link or `.json` path): which query index to read. Defaults to
-  `/us/en/magazine/query-index.json`.
+- **index path** (a link or `.json` path): which query index to read. If omitted,
+  the block tries `/us/en/magazine/query-index.json` then the site-wide
+  `/query-index.json` — so it works whether the index is magazine-scoped or global.
 - **limit: N**: cap the number of articles shown (newest first). `0`/omitted = all.
+- **path: /prefix/**: article path prefix to filter on (defaults to
+  `/us/en/magazine/`); results are limited to pages under this prefix and the
+  listing page itself is excluded.
 
 ## How it works
 

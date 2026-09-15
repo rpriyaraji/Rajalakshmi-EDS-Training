@@ -1,0 +1,28 @@
+name: Lighthouse
+
+# Runs Lighthouse (mobile) against the live WKND pages and uploads reports.
+# Manual trigger, and automatically after code lands on main.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Lighthouse CI (mobile)
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en
+            https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/about-us
+            https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/magazine
+            https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/magazine/western-australia
+          configPath: ./.github/lighthouse/lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

@@ -192,22 +192,36 @@ header nav .nav-search button {
 
 @media (width >= 900px) {
   header nav {
-    grid-template: 'brand sections tools' auto / auto 1fr auto;
-    padding: 16px 32px;
+    grid-template: 'brand sections tools' minmax(64px, auto) / auto 1fr auto;
+    align-items: center;
+    padding: 12px 32px;
   }
 
   header nav .nav-hamburger {
     display: none;
   }
 
+  /* brand cell: logo + utility links on one centered row (no vertical stack) */
+  header nav .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   header nav .nav-brand img {
     width: 128px;
+  }
+
+  /* utility links inline, not stacked below the logo */
+  header nav .nav-brand ul {
+    margin: 0;
+    align-items: center;
   }
 
   /* horizontal nav links — reset mobile full-width/flush overrides */
   header nav .nav-sections {
     display: block;
-    justify-self: start;
+    place-self: center start;
     width: auto;
     margin: 0 0 0 32px;
     border-top: 0;

@@ -1,0 +1,40 @@
+/* author — writer/photographer details card: avatar + name + role */
+
+.author .author-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.author .author-avatar {
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.author .author-avatar img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author .author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author .author-name {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+
+.author .author-role {
+  margin: 4px 0 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  color: var(--text-color);
+}

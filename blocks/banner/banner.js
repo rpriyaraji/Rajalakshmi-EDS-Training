@@ -1,6 +1,6 @@
 export default function decorate(block) {
-  // Extract children rows: [imageRow, titleRow, colorRow]
-  const [imageRow, titleRow, colorRow] = [...block.children];
+  // Rows are [imageRow, titleRow, colorRow]; only the color row is used here.
+  const colorRow = [...block.children][2];
 
   // Apply optional custom background color if authored
   const customColor = colorRow?.textContent?.trim();

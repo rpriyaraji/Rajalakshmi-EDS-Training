@@ -190,6 +190,13 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Accessibility: links inside body copy must not rely on color alone (WCAG).
+   Underline in-content paragraph links; nav, footer, buttons, and cards opt
+   out via their own block styles. */
+main .default-content-wrapper p a:any-link {
+  text-decoration: underline;
+}
+
 /* buttons */
 p.button-wrapper {
   margin: 12px 0;

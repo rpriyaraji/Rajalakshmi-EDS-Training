@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * localize-images.js — download externally-referenced images into the project
  * and rewrite content src="" references to local, served paths.

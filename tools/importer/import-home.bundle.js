@@ -175,6 +175,13 @@ var CustomImportScript = (() => {
         "meta",
         "noscript"
       ]);
+      element.querySelectorAll("a[href]").forEach((a) => {
+        const href = a.getAttribute("href");
+        if (!href) return;
+        if (/^\/[^/].*\.html(#.*)?$/.test(href) || /^\/us\/en.*\.html(#.*)?$/.test(href)) {
+          a.setAttribute("href", href.replace(/\.html(?=(#|$))/, ""));
+        }
+      });
     }
   }
 

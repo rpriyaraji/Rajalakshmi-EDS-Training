@@ -39,5 +39,16 @@ export default function transform(hookName, element, payload) {
       'meta',
       'noscript',
     ]);
+
+    // Normalize internal links: EDS serves extensionless paths, so a
+    // root-relative /us/en/foo.html link 404s. Strip the .html from same-site
+    // links (leave anchors, external URLs, and asset links untouched).
+    element.querySelectorAll('a[href]').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!href) return;
+      if (/^\/[^/].*\.html(#.*)?$/.test(href) || /^\/us\/en.*\.html(#.*)?$/.test(href)) {
+        a.setAttribute('href', href.replace(/\.html(?=(#|$))/, ''));
+      }
+    });
   }
 }

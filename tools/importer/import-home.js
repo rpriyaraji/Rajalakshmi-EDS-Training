@@ -6,6 +6,7 @@ import carouselHeroParser from './parsers/carousel-hero.js';
 import columnsFeaturedParser from './parsers/columns-featured.js';
 import cardsArticlesParser from './parsers/cards-articles.js';
 import heroFeatureParser from './parsers/hero-feature.js';
+import articleListRecentParser from './parsers/article-list-recent.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-cleanup.js';
@@ -17,6 +18,7 @@ const parsers = {
   'columns-featured': columnsFeaturedParser,
   'cards-articles': cardsArticlesParser,
   'hero-feature': heroFeatureParser,
+  'article-list': articleListRecentParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
@@ -104,6 +106,15 @@ function findBlocksOnPage(document, template) {
       });
     });
   });
+  // The home page has two identical `.image-list.list` rails. The FIRST one
+  // ("Recent Articles" -> magazine) becomes a dynamic, index-driven
+  // `article-list`; the second ("Where do you want to go?" -> adventures)
+  // stays a static `cards-articles` grid.
+  const cardRails = pageBlocks.filter((b) => b.name === 'cards-articles');
+  if (cardRails.length > 0) {
+    cardRails[0].name = 'article-list';
+  }
+
   console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }

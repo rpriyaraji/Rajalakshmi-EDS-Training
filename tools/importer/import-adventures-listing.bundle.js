@@ -35,68 +35,14 @@ var CustomImportScript = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // tools/importer/import-home.js
-  var import_home_exports = {};
-  __export(import_home_exports, {
-    default: () => import_home_default
+  // tools/importer/import-adventures-listing.js
+  var import_adventures_listing_exports = {};
+  __export(import_adventures_listing_exports, {
+    default: () => import_adventures_listing_default
   });
 
-  // tools/importer/parsers/carousel-hero.js
-  function parse(element, { document: document2 }) {
-    let slides = Array.from(element.querySelectorAll(".cmp-teaser--hero"));
-    if (!slides.length) {
-      slides = Array.from(element.querySelectorAll(".cmp-carousel__item"));
-    }
-    const cells = [];
-    slides.forEach((slide) => {
-      const image = slide.querySelector(".cmp-teaser__image img, img");
-      const title = slide.querySelector(".cmp-teaser__title, h1, h2, h3");
-      const description = slide.querySelector(".cmp-teaser__description, p");
-      const ctas = Array.from(
-        slide.querySelectorAll(".cmp-teaser__action-link, .cmp-teaser__action-container a")
-      );
-      const contentCell = [];
-      if (title) contentCell.push(title);
-      if (description) contentCell.push(description);
-      contentCell.push(...ctas);
-      if (image || contentCell.length) {
-        cells.push([image || "", contentCell]);
-      }
-    });
-    if (!cells.length) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "carousel-hero", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/columns-featured.js
-  function parse2(element, { document: document2 }) {
-    const content = element.querySelector(".cmp-teaser__content");
-    const imageContainer = element.querySelector(".cmp-teaser__image");
-    const image = imageContainer ? imageContainer.querySelector("img") : element.querySelector(".cmp-teaser__image img");
-    const pretitle = content ? content.querySelector(".cmp-teaser__pretitle") : null;
-    const title = content ? content.querySelector(".cmp-teaser__title, h1, h2, h3") : null;
-    const description = content ? content.querySelector(".cmp-teaser__description, p:not(.cmp-teaser__pretitle)") : null;
-    const ctas = content ? Array.from(content.querySelectorAll(".cmp-teaser__action-link, .cmp-teaser__action-container a")) : [];
-    const textCell = [];
-    if (pretitle) textCell.push(pretitle);
-    if (title) textCell.push(title);
-    if (description) textCell.push(description);
-    textCell.push(...ctas);
-    if (!textCell.length && !image) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    cells.push([textCell, image || ""]);
-    const block = WebImporter.Blocks.createBlock(document2, { name: "columns-featured", cells });
-    element.replaceWith(block);
-  }
-
   // tools/importer/parsers/cards-articles.js
-  function parse3(element, { document: document2 }) {
+  function parse(element, { document: document2 }) {
     const items = Array.from(element.querySelectorAll(".cmp-image-list__item"));
     const cells = [];
     items.forEach((item) => {
@@ -120,36 +66,6 @@ var CustomImportScript = (() => {
       return;
     }
     const block = WebImporter.Blocks.createBlock(document2, { name: "cards-articles", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/hero-feature.js
-  function parse4(element, { document: document2 }) {
-    const content = element.querySelector(".cmp-teaser__content");
-    const imageContainer = element.querySelector(".cmp-teaser__image");
-    const image = imageContainer ? imageContainer.querySelector("img") : element.querySelector(".cmp-teaser__image img");
-    const title = content ? content.querySelector(".cmp-teaser__title, h1, h2, h3") : null;
-    const description = content ? content.querySelector(".cmp-teaser__description, p") : null;
-    const ctas = content ? Array.from(content.querySelectorAll(".cmp-teaser__action-link, .cmp-teaser__action-container a")) : [];
-    const contentCell = [];
-    if (title) contentCell.push(title);
-    if (description) contentCell.push(description);
-    contentCell.push(...ctas);
-    if (!image && !contentCell.length) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    if (image) cells.push([image]);
-    cells.push([contentCell]);
-    const block = WebImporter.Blocks.createBlock(document2, { name: "hero-feature", cells });
-    element.replaceWith(block);
-  }
-
-  // tools/importer/parsers/article-list-recent.js
-  function parse5(element, { document: document2 }) {
-    const cells = [["limit: 4"]];
-    const block = WebImporter.Blocks.createBlock(document2, { name: "article-list", cells });
     element.replaceWith(block);
   }
 
@@ -220,67 +136,22 @@ var CustomImportScript = (() => {
     }
   }
 
-  // tools/importer/import-home.js
+  // tools/importer/import-adventures-listing.js
   var parsers = {
-    "carousel-hero": parse,
-    "columns-featured": parse2,
-    "cards-articles": parse3,
-    "hero-feature": parse4,
-    "article-list": parse5
+    "cards-articles": parse
   };
   var PAGE_TEMPLATE = {
-    name: "home",
-    description: "WKND home page: hero carousel, featured article, article/adventure card grids, and a feature hero banner.",
+    name: "adventures-listing",
+    description: "Adventures listing: title, intro teaser, and a grid of adventure cards.",
     urls: [
-      "https://wknd.site/us/en.html"
+      "https://wknd.site/us/en/adventures.html"
     ],
     blocks: [
-      { name: "carousel-hero", instances: [".cmp-carousel--hero"] },
-      { name: "columns-featured", instances: [".cmp-teaser--featured"] },
-      { name: "cards-articles", instances: [".image-list.list"] },
-      { name: "hero-feature", instances: [".cmp-teaser--imagebottom"] }
+      { name: "cards-articles", instances: [".image-list.list"] }
     ],
     sections: [
-      {
-        id: "s1",
-        name: "Hero Carousel",
-        selector: [".carousel.cmp-carousel--hero", ".cmp-carousel--hero"],
-        style: null,
-        blocks: ["carousel-hero"],
-        defaultContent: []
-      },
-      {
-        id: "s2",
-        name: "Featured Article",
-        selector: [".teaser.cmp-teaser--featured", ".cmp-teaser--featured"],
-        style: null,
-        blocks: ["columns-featured"],
-        defaultContent: []
-      },
-      {
-        id: "s3",
-        name: "Recent Articles",
-        selector: [".image-list.list"],
-        style: null,
-        blocks: ["cards-articles"],
-        defaultContent: [".cmp-title--underline", ".cmp-button--primary"]
-      },
-      {
-        id: "s4",
-        name: "Next Adventures / Climbing New Zealand",
-        selector: [".teaser.cmp-teaser--imagebottom", ".cmp-teaser--imagebottom"],
-        style: null,
-        blocks: ["hero-feature"],
-        defaultContent: [".cmp-title--underline"]
-      },
-      {
-        id: "s5",
-        name: "Where do you want to go?",
-        selector: [".image-list.list"],
-        style: null,
-        blocks: ["cards-articles"],
-        defaultContent: [".cmp-title", ".cmp-button--primary"]
-      }
+      { id: "l1", name: "Title", selector: [".cmp-title", "main .title"], style: null, blocks: [], defaultContent: ["h1", ".cmp-title__text"] },
+      { id: "l2", name: "Adventure Cards", selector: [".image-list.list"], style: null, blocks: ["cards-articles"], defaultContent: [] }
     ]
   };
   var transformers = [
@@ -301,28 +172,14 @@ var CustomImportScript = (() => {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
       blockDef.instances.forEach((selector) => {
-        const elements = document2.querySelectorAll(selector);
-        if (elements.length === 0) {
-          console.warn(`Block "${blockDef.name}" selector not found: ${selector}`);
-        }
-        elements.forEach((element) => {
-          pageBlocks.push({
-            name: blockDef.name,
-            selector,
-            element,
-            section: blockDef.section || null
-          });
+        document2.querySelectorAll(selector).forEach((element) => {
+          pageBlocks.push({ name: blockDef.name, selector, element });
         });
       });
     });
-    const cardRails = pageBlocks.filter((b) => b.name === "cards-articles");
-    if (cardRails.length > 0) {
-      cardRails[0].name = "article-list";
-    }
-    console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
-  var import_home_default = {
+  var import_adventures_listing_default = {
     transform: (payload) => {
       const { document: document2, url, params } = payload;
       const main = document2.body;
@@ -337,8 +194,6 @@ var CustomImportScript = (() => {
           } catch (e) {
             console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
           }
-        } else {
-          console.warn(`No parser found for block: ${block.name}`);
         }
       });
       executeTransformers("afterTransform", main, payload);
@@ -360,5 +215,5 @@ var CustomImportScript = (() => {
       }];
     }
   };
-  return __toCommonJS(import_home_exports);
+  return __toCommonJS(import_adventures_listing_exports);
 })();

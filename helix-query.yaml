@@ -5,7 +5,7 @@ indices:
     include:
       - '/us/en/magazine/**'
     exclude:
-      - '/us/en/magazine.html'
+      - '/us/en/magazine'
     target: /us/en/magazine/query-index.json
     properties:
       title:

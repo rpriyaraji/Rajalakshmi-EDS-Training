@@ -31,6 +31,10 @@
   max-width: none;
   margin: 0;
   padding: 0;
+
+  /* grid items default to min-width:auto and refuse to shrink below their
+     content, forcing horizontal overflow on narrow desktops — reset it */
+  min-width: 0;
 }
 
 /* full-width intro/section headings break the grid rows */
@@ -44,7 +48,15 @@
   }
 }
 
+/* 3-up on narrow desktops/tablets so the 164px portraits + padding don't
+   overflow the viewport before the full 4-up layout has room */
 @media (width >= 900px) {
+  .cards-contributors-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 1200px) {
   .cards-contributors-container {
     grid-template-columns: repeat(4, 1fr);
   }

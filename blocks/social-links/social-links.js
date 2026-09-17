@@ -35,9 +35,13 @@ export default function decorate(block) {
     if (authoredImg) {
       link.append(authoredImg);
     } else if (network) {
+      // Icons are committed under /icons/ so they resolve in production
+      // (content/ is git-ignored and 404s on the live site).
+      const base = window.hlx?.codeBasePath || '';
       const img = document.createElement('img');
-      img.src = `/content/images/social-${network}.svg`;
+      img.src = `${base}/icons/social-${network}.svg`;
       img.alt = label || network;
+      img.loading = 'lazy';
       img.width = 24;
       img.height = 24;
       link.append(img);

@@ -67,6 +67,15 @@ function articleTime(a) {
   return Number(a.lastModified || 0) || Date.parse(a.date || a.publisheddate || '') || 0;
 }
 
+// A usable image is a real path — not empty, not the "about:error" placeholder
+// DA writes for an image that failed to ingest, and not a data URI.
+function usableImage(src) {
+  if (!src || typeof src !== 'string') return '';
+  const s = src.trim();
+  if (!s || s.startsWith('about:') || s.startsWith('data:')) return '';
+  return s;
+}
+
 export default async function decorate(block) {
   const { index, limit, pathPrefix } = readConfig(block);
   let articles = await loadArticles(index);
@@ -85,10 +94,11 @@ export default async function decorate(block) {
   articles.forEach((article) => {
     const li = document.createElement('li');
 
-    if (article.image) {
+    const imageSrc = usableImage(article.image);
+    if (imageSrc) {
       const imageWrap = document.createElement('div');
       imageWrap.className = 'article-list-card-image';
-      const pic = createOptimizedPicture(article.image, article.title || '', false, [{ width: '750' }]);
+      const pic = createOptimizedPicture(imageSrc, article.title || '', false, [{ width: '750' }]);
       const link = document.createElement('a');
       link.href = article.path;
       link.append(pic);

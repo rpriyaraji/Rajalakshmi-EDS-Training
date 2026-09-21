@@ -1,26 +1,34 @@
 /* eslint-disable */
 /* global WebImporter */
 /**
- * Parser for the home page listing rails.
- * Instead of emitting a static cards grid, it emits a dynamic `article-list`
- * block that reads the published query-index at render time, so a home rail
- * stays in sync with its section with no code/content edit.
+ * Parser that emits a dynamic, index-driven `article-list` block in place of a
+ * static card grid. Used for both the home rails and the section listing pages
+ * so publishing an article/adventure updates every surface from one publish.
  *
- * `listPath` selects which section the rail reflects:
- *   - /us/en/magazine/   -> "Recent Articles" (default; magazine index)
- *   - /us/en/adventures/ -> "Where do you want to go?" (adventures index)
+ * Options (via the parse payload):
+ *   - listPath:  section prefix the list reads (default /us/en/magazine/).
+ *                Non-magazine prefixes are emitted as a `path:` config row.
+ *   - listLimit: max entries. 0 / undefined => no limit (show all) — used for
+ *                the listing pages; the home rails pass 4.
  *
- * Emitted block (adventures example):
- *   | article-list          |
+ * Emitted block (adventures listing example):
+ *   | article-list             |
  *   | path: /us/en/adventures/ |
- *   | limit: 4              |
  */
-export default function parse(element, { document, listPath }) {
+export default function parse(element, { document, listPath, listLimit }) {
   const cells = [];
   if (listPath && listPath !== '/us/en/magazine/') {
     cells.push([`path: ${listPath}`]);
   }
-  cells.push(['limit: 4']);
+  if (listLimit && listLimit > 0) {
+    cells.push([`limit: ${listLimit}`]);
+  }
+  // article-list needs at least one config row to createBlock cleanly; when a
+  // listing wants everything with the default magazine path, emit a harmless
+  // path row so the table is well-formed.
+  if (!cells.length) {
+    cells.push([`path: ${listPath || '/us/en/magazine/'}`]);
+  }
   const block = WebImporter.Blocks.createBlock(document, { name: 'article-list', cells });
   element.replaceWith(block);
 }

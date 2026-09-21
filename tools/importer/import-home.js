@@ -114,10 +114,12 @@ function findBlocksOnPage(document, template) {
   if (cardRails[0]) {
     cardRails[0].name = 'article-list';
     cardRails[0].listPath = '/us/en/magazine/';
+    cardRails[0].listLimit = 4; // home rail is a teaser: newest 4 only
   }
   if (cardRails[1]) {
     cardRails[1].name = 'article-list';
     cardRails[1].listPath = '/us/en/adventures/';
+    cardRails[1].listLimit = 4;
   }
 
   console.log(`Found ${pageBlocks.length} block instances on page`);
@@ -141,7 +143,9 @@ export default {
       const parser = parsers[block.name];
       if (parser) {
         try {
-          parser(block.element, { document, url, params, listPath: block.listPath });
+          parser(block.element, {
+            document, url, params, listPath: block.listPath, listLimit: block.listLimit,
+          });
         } catch (e) {
           console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
         }

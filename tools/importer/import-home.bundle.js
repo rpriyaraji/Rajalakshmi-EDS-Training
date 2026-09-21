@@ -147,12 +147,17 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/article-list-recent.js
-  function parse5(element, { document: document2, listPath }) {
+  function parse5(element, { document: document2, listPath, listLimit }) {
     const cells = [];
     if (listPath && listPath !== "/us/en/magazine/") {
       cells.push([`path: ${listPath}`]);
     }
-    cells.push(["limit: 4"]);
+    if (listLimit && listLimit > 0) {
+      cells.push([`limit: ${listLimit}`]);
+    }
+    if (!cells.length) {
+      cells.push([`path: ${listPath || "/us/en/magazine/"}`]);
+    }
     const block = WebImporter.Blocks.createBlock(document2, { name: "article-list", cells });
     element.replaceWith(block);
   }
@@ -330,10 +335,12 @@ var CustomImportScript = (() => {
     if (cardRails[0]) {
       cardRails[0].name = "article-list";
       cardRails[0].listPath = "/us/en/magazine/";
+      cardRails[0].listLimit = 4;
     }
     if (cardRails[1]) {
       cardRails[1].name = "article-list";
       cardRails[1].listPath = "/us/en/adventures/";
+      cardRails[1].listLimit = 4;
     }
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
@@ -349,7 +356,13 @@ var CustomImportScript = (() => {
         const parser = parsers[block.name];
         if (parser) {
           try {
-            parser(block.element, { document: document2, url, params, listPath: block.listPath });
+            parser(block.element, {
+              document: document2,
+              url,
+              params,
+              listPath: block.listPath,
+              listLimit: block.listLimit
+            });
           } catch (e) {
             console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
           }

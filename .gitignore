@@ -13,3 +13,7 @@ helix-importer-ui
 !AGENTS.md
 migration-work/navigation-validation/
 migration-work/footer-validation/
+
+# Agent/session scratch dirs — not project source
+.agents/
+.migration/

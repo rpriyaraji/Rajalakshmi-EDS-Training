@@ -147,8 +147,12 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/article-list-recent.js
-  function parse5(element, { document: document2 }) {
-    const cells = [["limit: 4"]];
+  function parse5(element, { document: document2, listPath }) {
+    const cells = [];
+    if (listPath && listPath !== "/us/en/magazine/") {
+      cells.push([`path: ${listPath}`]);
+    }
+    cells.push(["limit: 4"]);
     const block = WebImporter.Blocks.createBlock(document2, { name: "article-list", cells });
     element.replaceWith(block);
   }
@@ -323,8 +327,13 @@ var CustomImportScript = (() => {
       });
     });
     const cardRails = pageBlocks.filter((b) => b.name === "cards-articles");
-    if (cardRails.length > 0) {
+    if (cardRails[0]) {
       cardRails[0].name = "article-list";
+      cardRails[0].listPath = "/us/en/magazine/";
+    }
+    if (cardRails[1]) {
+      cardRails[1].name = "article-list";
+      cardRails[1].listPath = "/us/en/adventures/";
     }
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
@@ -340,7 +349,7 @@ var CustomImportScript = (() => {
         const parser = parsers[block.name];
         if (parser) {
           try {
-            parser(block.element, { document: document2, url, params });
+            parser(block.element, { document: document2, url, params, listPath: block.listPath });
           } catch (e) {
             console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
           }

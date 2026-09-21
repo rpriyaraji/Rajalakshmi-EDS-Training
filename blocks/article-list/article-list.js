@@ -17,9 +17,15 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  *   | path: /us/en/magazine/ |  (optional; article path prefix to filter on)
  */
 
-// Tried in order; first one that returns rows wins.
-const DEFAULT_INDEXES = ['/us/en/magazine/query-index.json', '/query-index.json'];
 const DEFAULT_PATH_PREFIX = '/us/en/magazine/';
+
+// If no index is authored, derive candidates from the path prefix (the
+// section-scoped index) and fall back to the site-wide index. So `path:
+// /us/en/adventures/` automatically reads /us/en/adventures/query-index.json.
+function indexCandidates(pathPrefix) {
+  const scoped = `${pathPrefix.replace(/\/$/, '')}/query-index.json`;
+  return [scoped, '/query-index.json'];
+}
 
 function readConfig(block) {
   const cfg = { index: null, limit: 0, pathPrefix: DEFAULT_PATH_PREFIX };
@@ -51,9 +57,9 @@ async function fetchIndex(path) {
   }
 }
 
-// Try the authored index, else each default candidate, until one has rows.
-async function loadArticles(configuredIndex) {
-  const candidates = configuredIndex ? [configuredIndex] : DEFAULT_INDEXES;
+// Try the authored index, else each derived candidate, until one has rows.
+async function loadArticles(configuredIndex, pathPrefix) {
+  const candidates = configuredIndex ? [configuredIndex] : indexCandidates(pathPrefix);
   // eslint-disable-next-line no-restricted-syntax
   for (const candidate of candidates) {
     // eslint-disable-next-line no-await-in-loop
@@ -78,13 +84,14 @@ function usableImage(src) {
 
 export default async function decorate(block) {
   const { index, limit, pathPrefix } = readConfig(block);
-  let articles = await loadArticles(index);
+  let articles = await loadArticles(index, pathPrefix);
 
-  // Keep only magazine article pages (drop the listing page and anything else).
+  // Keep only detail pages under the prefix; drop the section listing page
+  // itself (e.g. /us/en/magazine or /us/en/adventures).
+  const listingPath = pathPrefix.replace(/\/$/, '');
   articles = articles.filter((a) => a.path
     && a.path.startsWith(pathPrefix)
-    && a.path !== pathPrefix.replace(/\/$/, '')
-    && !a.path.endsWith('/magazine'));
+    && a.path !== listingPath);
 
   // newest first
   articles.sort((a, b) => articleTime(b) - articleTime(a));

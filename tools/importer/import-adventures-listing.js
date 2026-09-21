@@ -2,7 +2,7 @@
 /* global WebImporter */
 
 // PARSER IMPORTS
-import cardsArticlesParser from './parsers/cards-articles.js';
+import articleListRecentParser from './parsers/article-list-recent.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-cleanup.js';
@@ -10,7 +10,7 @@ import sectionsTransformer from './transformers/wknd-sections.js';
 
 // PARSER REGISTRY
 const parsers = {
-  'cards-articles': cardsArticlesParser,
+  'article-list': articleListRecentParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION
@@ -21,11 +21,11 @@ const PAGE_TEMPLATE = {
     'https://wknd.site/us/en/adventures.html',
   ],
   blocks: [
-    { name: 'cards-articles', instances: ['.image-list.list'] },
+    { name: 'article-list', instances: ['.image-list.list'] },
   ],
   sections: [
     { id: 'l1', name: 'Title', selector: ['.cmp-title', 'main .title'], style: null, blocks: [], defaultContent: ['h1', '.cmp-title__text'] },
-    { id: 'l2', name: 'Adventure Cards', selector: ['.image-list.list'], style: null, blocks: ['cards-articles'], defaultContent: [] },
+    { id: 'l2', name: 'Adventure Cards', selector: ['.image-list.list'], style: null, blocks: ['article-list'], defaultContent: [] },
   ],
 };
 
@@ -55,7 +55,21 @@ function findBlocksOnPage(document, template) {
       });
     });
   });
-  return pageBlocks;
+  // The source renders one grid per category tab (All + per-category). We only
+  // need one dynamic list: keep the FIRST as an index-driven article-list
+  // (adventures index, no limit -> all trips) and drop the rest so publishing
+  // an adventure updates this listing with no code change (G1).
+  const rails = pageBlocks.filter((b) => b.name === 'article-list');
+  rails.forEach((rail, i) => {
+    if (i === 0) {
+      rail.listPath = '/us/en/adventures/';
+    } else {
+      // remove the duplicate category grids from the DOM
+      if (rail.element.parentNode) rail.element.remove();
+      rail.skip = true;
+    }
+  });
+  return pageBlocks.filter((b) => !b.skip);
 }
 
 export default {
@@ -71,7 +85,9 @@ export default {
       const parser = parsers[block.name];
       if (parser) {
         try {
-          parser(block.element, { document, url, params });
+          parser(block.element, {
+            document, url, params, listPath: block.listPath, listLimit: block.listLimit,
+          });
         } catch (e) {
           console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
         }

@@ -41,31 +41,19 @@ var CustomImportScript = (() => {
     default: () => import_adventures_listing_default
   });
 
-  // tools/importer/parsers/cards-articles.js
-  function parse(element, { document: document2 }) {
-    const items = Array.from(element.querySelectorAll(".cmp-image-list__item"));
+  // tools/importer/parsers/article-list-recent.js
+  function parse(element, { document: document2, listPath, listLimit }) {
     const cells = [];
-    items.forEach((item) => {
-      const image = item.querySelector(".cmp-image-list__item-image img, img");
-      const titleLink = item.querySelector(".cmp-image-list__item-title-link");
-      const titleSpan = item.querySelector(".cmp-image-list__item-title");
-      const description = item.querySelector(".cmp-image-list__item-description");
-      const contentCell = [];
-      if (titleLink) {
-        contentCell.push(titleLink);
-      } else if (titleSpan) {
-        contentCell.push(titleSpan);
-      }
-      if (description) contentCell.push(description);
-      if (image || contentCell.length) {
-        cells.push([image || "", contentCell]);
-      }
-    });
-    if (!cells.length) {
-      element.replaceWith(...element.childNodes);
-      return;
+    if (listPath && listPath !== "/us/en/magazine/") {
+      cells.push([`path: ${listPath}`]);
     }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-articles", cells });
+    if (listLimit && listLimit > 0) {
+      cells.push([`limit: ${listLimit}`]);
+    }
+    if (!cells.length) {
+      cells.push([`path: ${listPath || "/us/en/magazine/"}`]);
+    }
+    const block = WebImporter.Blocks.createBlock(document2, { name: "article-list", cells });
     element.replaceWith(block);
   }
 
@@ -145,7 +133,7 @@ var CustomImportScript = (() => {
 
   // tools/importer/import-adventures-listing.js
   var parsers = {
-    "cards-articles": parse
+    "article-list": parse
   };
   var PAGE_TEMPLATE = {
     name: "adventures-listing",
@@ -154,11 +142,11 @@ var CustomImportScript = (() => {
       "https://wknd.site/us/en/adventures.html"
     ],
     blocks: [
-      { name: "cards-articles", instances: [".image-list.list"] }
+      { name: "article-list", instances: [".image-list.list"] }
     ],
     sections: [
       { id: "l1", name: "Title", selector: [".cmp-title", "main .title"], style: null, blocks: [], defaultContent: ["h1", ".cmp-title__text"] },
-      { id: "l2", name: "Adventure Cards", selector: [".image-list.list"], style: null, blocks: ["cards-articles"], defaultContent: [] }
+      { id: "l2", name: "Adventure Cards", selector: [".image-list.list"], style: null, blocks: ["article-list"], defaultContent: [] }
     ]
   };
   var transformers = [
@@ -184,7 +172,16 @@ var CustomImportScript = (() => {
         });
       });
     });
-    return pageBlocks;
+    const rails = pageBlocks.filter((b) => b.name === "article-list");
+    rails.forEach((rail, i) => {
+      if (i === 0) {
+        rail.listPath = "/us/en/adventures/";
+      } else {
+        if (rail.element.parentNode) rail.element.remove();
+        rail.skip = true;
+      }
+    });
+    return pageBlocks.filter((b) => !b.skip);
   }
   var import_adventures_listing_default = {
     transform: (payload) => {
@@ -197,7 +194,13 @@ var CustomImportScript = (() => {
         const parser = parsers[block.name];
         if (parser) {
           try {
-            parser(block.element, { document: document2, url, params });
+            parser(block.element, {
+              document: document2,
+              url,
+              params,
+              listPath: block.listPath,
+              listLimit: block.listLimit
+            });
           } catch (e) {
             console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
           }

@@ -137,6 +137,22 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/article-list-recent.js
+  function parse5(element, { document: document2, listPath, listLimit }) {
+    const cells = [];
+    if (listPath && listPath !== "/us/en/magazine/") {
+      cells.push([`path: ${listPath}`]);
+    }
+    if (listLimit && listLimit > 0) {
+      cells.push([`limit: ${listLimit}`]);
+    }
+    if (!cells.length) {
+      cells.push([`path: ${listPath || "/us/en/magazine/"}`]);
+    }
+    const block = WebImporter.Blocks.createBlock(document2, { name: "article-list", cells });
+    element.replaceWith(block);
+  }
+
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform(hookName, element, payload) {
@@ -216,7 +232,8 @@ var CustomImportScript = (() => {
     "cards-contributors": parse,
     "columns-featured": parse2,
     "cards-articles": parse3,
-    "cards-secure": parse4
+    "cards-secure": parse4,
+    "article-list": parse5
   };
   var PAGE_TEMPLATE = {
     name: "about-us",
@@ -298,6 +315,11 @@ var CustomImportScript = (() => {
         });
       });
     });
+    const cardRails = pageBlocks.filter((b) => b.name === "cards-articles");
+    cardRails.forEach((rail) => {
+      rail.name = "article-list";
+      rail.listPath = "/us/en/magazine/";
+    });
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
@@ -312,7 +334,13 @@ var CustomImportScript = (() => {
         const parser = parsers[block.name];
         if (parser) {
           try {
-            parser(block.element, { document: document2, url, params });
+            parser(block.element, {
+              document: document2,
+              url,
+              params,
+              listPath: block.listPath,
+              listLimit: block.listLimit
+            });
           } catch (e) {
             console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
           }

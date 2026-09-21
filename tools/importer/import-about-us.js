@@ -6,6 +6,7 @@ import cardsContributorsParser from './parsers/cards-contributors.js';
 import columnsFeaturedParser from './parsers/columns-featured.js';
 import cardsArticlesParser from './parsers/cards-articles.js';
 import cardsSecureParser from './parsers/cards-secure.js';
+import articleListRecentParser from './parsers/article-list-recent.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-cleanup.js';
@@ -17,6 +18,7 @@ const parsers = {
   'columns-featured': columnsFeaturedParser,
   'cards-articles': cardsArticlesParser,
   'cards-secure': cardsSecureParser,
+  'article-list': articleListRecentParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
@@ -95,6 +97,14 @@ function findBlocksOnPage(document, template) {
       });
     });
   });
+  // The magazine listing's article grid (.image-list.list) becomes a dynamic
+  // article-list reading the magazine index, so publishing an article updates
+  // this listing with no code change (G1). No limit -> show all articles.
+  const cardRails = pageBlocks.filter((b) => b.name === 'cards-articles');
+  cardRails.forEach((rail) => {
+    rail.name = 'article-list';
+    rail.listPath = '/us/en/magazine/';
+  });
   console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }
@@ -113,7 +123,9 @@ export default {
       const parser = parsers[block.name];
       if (parser) {
         try {
-          parser(block.element, { document, url, params });
+          parser(block.element, {
+            document, url, params, listPath: block.listPath, listLimit: block.listLimit,
+          });
         } catch (e) {
           console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
         }

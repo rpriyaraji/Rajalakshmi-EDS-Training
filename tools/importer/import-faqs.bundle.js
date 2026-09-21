@@ -49,7 +49,7 @@ var CustomImportScript = (() => {
       const title = item.querySelector(".cmp-accordion__title");
       const panel = item.querySelector(".cmp-accordion__panel");
       if (title) {
-        const h = document2.createElement("h3");
+        const h = document2.createElement("h2");
         h.textContent = title.textContent.trim();
         frag.append(h);
       }

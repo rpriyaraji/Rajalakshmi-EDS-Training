@@ -93,8 +93,17 @@ export default async function decorate(block) {
     && a.path.startsWith(pathPrefix)
     && a.path !== listingPath);
 
-  // newest first
-  articles.sort((a, b) => articleTime(b) - articleTime(a));
+  // Newest first. Prefer real timestamps (lastModified / date); if none of the
+  // rows carry a usable timestamp, fall back to reverse index order — the query
+  // index appends newly-published pages at the end, so the last row is the most
+  // recently added. This keeps a freshly published article surfacing on a
+  // limited rail even before a date field is indexed.
+  const hasTimes = articles.some((a) => articleTime(a) > 0);
+  if (hasTimes) {
+    articles.sort((a, b) => articleTime(b) - articleTime(a));
+  } else {
+    articles.reverse();
+  }
   if (limit > 0) articles = articles.slice(0, limit);
 
   const ul = document.createElement('ul');

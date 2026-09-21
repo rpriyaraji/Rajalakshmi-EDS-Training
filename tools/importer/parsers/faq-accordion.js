@@ -15,7 +15,9 @@ export default function parse(element, { document }) {
     const panel = item.querySelector('.cmp-accordion__panel');
 
     if (title) {
-      const h = document.createElement('h3');
+      // h2 (not h3) so the outline is h1 (page title) -> h2 (questions) with
+      // no skipped level (fixes the heading-order a11y audit).
+      const h = document.createElement('h2');
       h.textContent = title.textContent.trim();
       frag.append(h);
     }

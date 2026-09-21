@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "url": "https://wknd.site/us/en/adventures/yosemite-backpacking.html",
+  "path": "us/en/adventures/yosemite-backpacking.html",
+  "timestamp": "2026-09-17T13:29:12.135Z",
+  "error": "page.evaluate: Target page, context or browser has been closed",
+  "errorStack": "page.evaluate: Target page, context or browser has been closed\n    at processUrl (/home/node/.excat-marketplaces/excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:639:16)\n    at async main (/home/node/.excat-marketplaces/excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:954:22)"
+}

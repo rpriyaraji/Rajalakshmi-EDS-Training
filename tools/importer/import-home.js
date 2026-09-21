@@ -106,13 +106,18 @@ function findBlocksOnPage(document, template) {
       });
     });
   });
-  // The home page has two identical `.image-list.list` rails. The FIRST one
-  // ("Recent Articles" -> magazine) becomes a dynamic, index-driven
-  // `article-list`; the second ("Where do you want to go?" -> adventures)
-  // stays a static `cards-articles` grid.
+  // The home page has two identical `.image-list.list` rails. BOTH become
+  // dynamic, index-driven `article-list` blocks (no hardcoded links): the
+  // first ("Recent Articles") reads the magazine index; the second ("Where do
+  // you want to go?") reads the adventures index via a `path:` config row.
   const cardRails = pageBlocks.filter((b) => b.name === 'cards-articles');
-  if (cardRails.length > 0) {
+  if (cardRails[0]) {
     cardRails[0].name = 'article-list';
+    cardRails[0].listPath = '/us/en/magazine/';
+  }
+  if (cardRails[1]) {
+    cardRails[1].name = 'article-list';
+    cardRails[1].listPath = '/us/en/adventures/';
   }
 
   console.log(`Found ${pageBlocks.length} block instances on page`);
@@ -136,7 +141,7 @@ export default {
       const parser = parsers[block.name];
       if (parser) {
         try {
-          parser(block.element, { document, url, params });
+          parser(block.element, { document, url, params, listPath: block.listPath });
         } catch (e) {
           console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
         }

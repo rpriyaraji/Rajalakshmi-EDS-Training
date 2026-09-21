@@ -48,3 +48,66 @@
   line-height: 1.5;
   color: var(--link-color);
 }
+
+/* ── "secure" variant — WKND "Members Only" teasers (was a forked block).
+   Compact 2-up cards with a fixed-height image and a serif title. Each teaser
+   is authored as its own single-card block; the grid is laid out across the
+   sibling block wrappers at the section-container level. */
+.cards-container:has(.cards.secure) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: var(--content-max-width);
+  margin: auto;
+  padding: 0 24px;
+}
+
+.cards-container:has(.cards.secure) > .cards-wrapper {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (width >= 600px) {
+  .cards-container:has(.cards.secure) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards-container:has(.cards.secure) {
+    padding: 0 32px;
+  }
+}
+
+.cards.secure > ul {
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.cards.secure > ul > li img {
+  aspect-ratio: auto;
+  height: 200px;
+}
+
+.cards.secure .cards-card-body {
+  margin: 12px 0 0;
+}
+
+.cards.secure .cards-card-body h2,
+.cards.secure .cards-card-body h3 {
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+
+.cards.secure .cards-card-body p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  color: var(--text-color);
+}

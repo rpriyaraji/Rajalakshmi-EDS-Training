@@ -133,7 +133,7 @@ var CustomImportScript = (() => {
       return;
     }
     const cells = [[image || "", contentCell]];
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-secure", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "cards (secure)", cells });
     element.replaceWith(block);
   }
 

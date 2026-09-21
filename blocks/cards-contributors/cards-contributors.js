@@ -18,7 +18,15 @@ export default function decorate(block) {
   ul.querySelectorAll('.cards-contributors-card-body').forEach((body) => {
     const headings = [...body.querySelectorAll('h1, h2, h3, h4, h5, h6')];
     if (headings[0]) headings[0].classList.add('contributor-name');
-    if (headings[1]) headings[1].classList.add('contributor-role');
+    // The role line is a subtitle, not a document heading — the source marks it
+    // as h5, which skips h4 after the h3 name and trips the heading-order audit.
+    // Replace it with a styled <p> so it keeps its look without breaking the outline.
+    if (headings[1]) {
+      const role = document.createElement('p');
+      role.className = 'contributor-role';
+      role.textContent = headings[1].textContent.trim();
+      headings[1].replaceWith(role);
+    }
     const socialLinks = [...body.querySelectorAll('a')];
     if (socialLinks.length) {
       const social = document.createElement('p');

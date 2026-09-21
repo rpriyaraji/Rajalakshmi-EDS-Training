@@ -23,6 +23,8 @@ jobs:
             https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/about-us
             https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/magazine
             https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/magazine/western-australia
+            https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/adventures
+            https://main--rajalakshmi-eds-training--rpriyaraji.aem.live/us/en/faqs
           configPath: ./.github/lighthouse/lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true

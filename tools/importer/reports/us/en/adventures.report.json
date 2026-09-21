@@ -2,15 +2,10 @@
   "status": "success",
   "url": "https://wknd.site/us/en/adventures.html",
   "path": "us/en/adventures",
-  "timestamp": "2026-09-17T13:30:47.045Z",
+  "timestamp": "2026-09-21T13:59:10.874Z",
   "title": "Adventures",
   "template": "adventures-listing",
   "blocks": [
-    "cards-articles",
-    "cards-articles",
-    "cards-articles",
-    "cards-articles",
-    "cards-articles",
-    "cards-articles"
+    "article-list"
   ]
 }
